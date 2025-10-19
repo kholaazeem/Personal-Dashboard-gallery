@@ -40,9 +40,43 @@ async function signup(e) {
     }
 }
 
-signupPage.addEventListener("submit", signup)
+signupPage && signupPage.addEventListener("submit", signup);
 
 
 
        /////////////login page
 
+       let loginPage = document.getElementById("login-page")
+       let loginEmail = document.getElementById("login-email")
+       let loginPassword = document.getElementById("login-password")
+      
+       
+       async function login(e) {
+           e.preventDefault()
+           try {
+               if (!loginEmail.value) {
+                   alert("Please Enter your Email")
+                   return
+               }
+               if (!loginPassword.value) {
+                   alert("Please Enter your Password")
+                   return
+               }
+            
+               const { data, error } = await supabase.auth.signInWithPassword({
+                email: loginEmail.value,
+                password: loginPassword.value,
+              })
+
+               if (error) {
+                   console.log(error)
+               } else {
+                   location.href = "home.html";
+               }
+       
+           } catch (err) {
+               console.log(err)
+           }
+       }
+       
+       loginPage && loginPage.addEventListener("submit", login)
