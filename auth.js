@@ -80,3 +80,28 @@ signupPage && signupPage.addEventListener("submit", signup);
        }
        
        loginPage && loginPage.addEventListener("submit", login)
+
+            //////////logout
+       
+       let logoutBtn = document.getElementById("logout-btn")
+
+     console.log(logoutBtn);
+       async function logout(){
+       
+        try {
+            const { error } = await supabase.auth.signOut()
+
+
+        if (!error) {
+            alert("Logged out successfully")
+            location.href="login.html"
+        }
+
+
+
+       } catch (err) {
+           console.log(err) 
+        }
+    }
+
+    logoutBtn && logoutBtn.addEventListener("click",logout)
