@@ -32,7 +32,7 @@ async function signup(e) {
         if (error) {
             console.log(error)
         } else {
-            location.href = "home.html";
+            location.href = "login.html";
         }
 
     } catch (err) {
