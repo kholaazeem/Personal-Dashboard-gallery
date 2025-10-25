@@ -70,8 +70,16 @@ signupPage && signupPage.addEventListener("submit", signup);
 
                if (error) {
                    console.log(error)
+                   return
                } else {
-                   location.href = "home.html";
+                Swal.fire({
+                  title: "Good job!",
+                  text: "You clicked the button!",
+                  icon: "success"
+               })
+                   .then(() => {
+    location.href = "home.html";
+  });
                }
        
            } catch (err) {
