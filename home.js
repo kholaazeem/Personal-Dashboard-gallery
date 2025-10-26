@@ -1,19 +1,19 @@
 import supabase from "/config.js"
 
 let username = document.getElementById("username")
-        //  fetch data of current  user
+//  fetch data of current  user
 async function userFetch() {
-    try {
-           const { data, error } = await supabase.auth.getUser();
+  try {
+    const { data, error } = await supabase.auth.getUser();
     console.log(data);
 
     if (data) {
       username.innerHTML = data.user.user_metadata.name;
     }
 
-    } catch (error) {
-       console.log (error) 
-    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 userFetch()
@@ -42,7 +42,7 @@ async function _addTodo() {
     }
   }
 
-  
+
   if (!todoTitle.value || !todoDesc.value || !selectedPriority) {
     Swal.fire({
       title: "Missing Information",
@@ -77,7 +77,7 @@ async function _addTodo() {
     } catch (err) {
       console.log("Error while updating ", err);
     }
-  } 
+  }
 
   else {
     try {
@@ -100,7 +100,7 @@ async function _addTodo() {
           text: "Task added successfully.",
           icon: "success",
         });
-       
+
       }
     } catch (err) {
       console.log("Error while inserting ", err);
@@ -112,7 +112,7 @@ async function _addTodo() {
 btnAddTask.addEventListener("click", _addTodo);
 
 
-        //       Fetch data
+//       Fetch data
 
 async function fetchTodos() {
   try {
@@ -137,8 +137,8 @@ function displayTodos(todos) {
       todo.priority === "High"
         ? "danger"
         : todo.priority === "Medium"
-        ? "warning text-dark"
-        : "success";
+          ? "warning text-dark"
+          : "success";
 
     taskContainer.innerHTML += `
       <div class="card shadow-sm border-0">
@@ -148,16 +148,46 @@ function displayTodos(todos) {
           <span class="badge bg-${color}">${todo.priority}</span>
 
           <br>
-    <button class="btn btn-outline-secondary" onclick="editTodo(${todo.id})">Edit</button>
-    <button class="btn btn-outline-secondary" onclick="dltTodo(${todo.id})">Delete</i></button>
+    <button class="btn btn-outline-secondary" onclick="editTodo(${todo.id},'${todo.title}','${todo.description}','${todo.priority}')">Edit</button>
+    <button class="btn btn-outline-secondary" onclick="dltTodo(${todo.id},'${todo.title}','${todo.description}','${todo.priority}')">Delete</i></button>
       </div>`;
   });
+}
+
+window.editTodo = function (id, titl, desc,prio  ) {
+
+
+  todoDesc.value = desc;
+  todoTitle.value = titl
+  
+  // console.log(selectedPriority);
+  // radio.forEach(onepri => {
+  //   if (onepri.value == prio) {
+  //     onepri.checked = onepri.value == prio
+  //   }
+  // })
+
+
+
+  let todoPriority = document.getElementsByName("taskPriority");
+
+  // Loop through all the radio buttons and check the one that matches 'prio'
+  for (let p of todoPriority) {
+    if (p.value === prio) {
+      p.checked = true;  // Set the matching radio button to checked
+    } else {
+      p.checked = false; // Uncheck the others
+    }
+  }
+
 }
 
 
 
 
-fetchTodos();
 
+
+
+fetchTodos();
 
 
