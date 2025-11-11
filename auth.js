@@ -1,4 +1,4 @@
-import supabase from "/config.js"
+import supabase from "./config.js"
 
 let signupPage = document.getElementById("signup-page")
 let signupEmail = document.getElementById("signup-email")
