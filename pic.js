@@ -2,7 +2,8 @@ import supabase from "./config.js";
 
 let inputFile = document.getElementById("input-file");
 let uplBtn = document.getElementById("upl-btn");
-let image = document.getElementById("image");
+let cards = document.getElementById("cards")
+// let image = document.getElementById("image");   ye phly kiya tha just user ko pic dikhnay k liye public url genrate kr k
 let pubUrl;
 let imgUrl;
 
@@ -27,7 +28,7 @@ async function uplFile() {
       console.log(fileData[1]);
       pubUrl = fileData[1];
 
-      // generate public url(text form of) for user or to save images/vid/audio in supabase/database bcz db only save text
+      // generate public url(text form of) to show user or to save images/vid/audio in supabase/database bcz db only save text
      
       const { data: urlData } = supabase.storage
         .from("pictures")
@@ -61,3 +62,35 @@ async function uplFile() {
 }
 
 uplBtn.addEventListener("click", uplFile);
+
+
+            // fetch images/data from tables to show user
+
+async function fetchImg() {
+   cards.innerHTML= " "
+    const { data, error } = await supabase
+  .from('userpics')
+  .select("*")
+
+ if(data){
+  data.forEach(card => {
+  console.log(card)
+ cards.innerHTML += `
+<div class="card mb-4" style="width: 18rem;">
+     <img src="${card.image}" class="card-img-top" alt="">
+     <div class="card-body">
+         <button class="btn btn-success me-2" onclick = "startEdit()">Edit</button>
+         <button class="btn btn-danger"  onclick = "dltCard()">Delete</button>
+     </div>
+</div>
+`;
+
+});
+ }else{
+  console.log("Error in fecthing data/imgs from table/db:" + " " + error)
+ }
+
+
+}    
+
+   fetchImg()     
