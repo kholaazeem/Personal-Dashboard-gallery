@@ -4,6 +4,7 @@ let inputFile = document.getElementById("input-file");
 let uplBtn = document.getElementById("upl-btn");
 let cards = document.getElementById("cards")
 // let image = document.getElementById("image");   ye phly kiya tha just user ko pic dikhnay k liye public url genrate kr k
+let editInpfile = document.getElementById("edtInpFile")
 let pubUrl;
 let imgUrl;
 
@@ -28,7 +29,7 @@ async function uplFile() {
       console.log(fileData[1]);
       pubUrl = fileData[1];
 
-      // generate public url(text form of) to show user or to save images/vid/audio in supabase/database bcz db only save text
+                        // generate public url(text form of) to show user or to save images/vid/audio in supabase/database bcz db only save text
      
       const { data: urlData } = supabase.storage
         .from("pictures")
@@ -38,7 +39,7 @@ async function uplFile() {
         //image.src = urlData.publicUrl
         imgUrl = urlData.publicUrl;
        
-        //insert/add publicurl (image) in tables/database
+                          //insert/add publicurl (image) in tables/database
 
         const { error } = await supabase
           .from("userpics")
@@ -64,7 +65,7 @@ async function uplFile() {
 uplBtn.addEventListener("click", uplFile);
 
 
-            // fetch images/data from tables to show user
+                         // fetch images/data from tables to show user
 
 async function fetchImg() {
    cards.innerHTML= " "
@@ -79,8 +80,8 @@ async function fetchImg() {
 <div class="card mb-4" style="width: 18rem;">
      <img src="${card.image}" class="card-img-top" alt="">
      <div class="card-body">
-         <button class="btn btn-success me-2" onclick = "startEdit()">Edit</button>
-         <button class="btn btn-danger"  onclick = "dltCard()">Delete</button>
+         <button class="btn btn-success me-2" onclick = "startEdit(${card.id},'${card.image}')">Edit</button>
+         <button class="btn btn-danger"  onclick = "dltCard(${card.id},${card.image})">Delete</button>
      </div>
 </div>
 `;
@@ -94,3 +95,27 @@ async function fetchImg() {
 }    
 
    fetchImg()     
+
+
+window.startEdit = (oldImgId , oldImgUrl)=>{
+  editInpfile.click()
+  console.log("Now you can edit/replace your image")
+  window.oldImgFileName = oldImgUrl.split('/pictures/')[1]
+  console.log(oldImgFileName)
+  window.oldImgFileId = oldImgId
+  console.log(oldImgFileId)
+
+
+}
+editInpfile.addEventListener('change', async (e)=>{
+ console.log("hdjkjks")
+  const { data, error } = await supabase
+  .storage
+  .from('pictures')
+  .remove([oldImgFileName])
+
+  if(error){
+  console.log("Error in deleting file from bucket:" + " " +" " +  error)
+}
+})
+
