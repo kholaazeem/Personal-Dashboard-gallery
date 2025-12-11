@@ -7,6 +7,7 @@ let cards = document.getElementById("cards")
 let editInpfile = document.getElementById("edtInpFile")
 let pubUrl;
 let imgUrl;
+let newPubUrl;
 
 async function uplFile() {
   // console.log(inputFile.files[0].name);
@@ -100,22 +101,73 @@ async function fetchImg() {
 window.startEdit = (oldImgId , oldImgUrl)=>{
   editInpfile.click()
   console.log("Now you can edit/replace your image")
-  window.oldImgFileName = oldImgUrl.split('/pictures/')[1]
-  console.log(oldImgFileName)
+  // window.oldImgFileName = oldImgUrl.split('/pictures/')[1]
+  // console.log(oldImgFileName)
+  window.oldImgFileName = decodeURIComponent(oldImgUrl.split('/pictures/')[1])
+console.log("Decoded file name:", oldImgFileName)
+
   window.oldImgFileId = oldImgId
   console.log(oldImgFileId)
 
 
 }
 editInpfile.addEventListener('change', async (e)=>{
- console.log("hdjkjks")
+   console.log("Change event triggered");
   const { data, error } = await supabase
   .storage
   .from('pictures')
   .remove([oldImgFileName])
 
   if(error){
-  console.log("Error in deleting file from bucket:" + " " +" " +  error)
+   console.log("Error in deleting file from bucket:", error);
+}else{
+  console.log("File deleted successfully:", data)
 }
+
+// console.log(e.target.files[0])
+// console.log(e.target.files[0].name)
+
+
+const newFile = e.target.files[0]
+const newFileName = e.target.files[0].name
+console.log(newFile,newFileName)
+
+const { data:uplData, error: uplError } = await supabase.storage
+      .from("pictures")
+      .upload(newFileName, newFile, {});
+
+
+      if(uplData){
+        console.log(uplData)
+        console.log(uplData.fullPath)
+        var newFileData = uplData.fullPath.split('/')
+        console.log(newFileData)
+        console.log(newFileData[1])
+        newPubUrl = newFileData[1]
+
+        const { data: newPubUrlData } = supabase.storage
+        .from("pictures")
+        .getPublicUrl(newPubUrl);
+
+        if(newPubUrlData){
+          console.log(newPubUrlData)
+          console.log(newPubUrlData.publicUrl)
+
+            const { error } = await supabase
+          .from("userpics")
+          .update({image : newPubUrlData.publicUrl})
+           .eq('id', oldImgFileId);
+      }
+      if(error){
+        console.log("Error in inserting data into tables/db: ", error)
+      }else{
+        alert("Succefully edit pic")
+      }
+
+      fetchImg()
+        
+
+      }
+      console.log(uplError)
 })
 
