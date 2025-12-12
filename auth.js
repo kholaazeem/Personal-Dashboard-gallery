@@ -3,7 +3,7 @@ import supabase from "./config.js"
 let signupPage = document.getElementById("signup-page")
 let signupEmail = document.getElementById("signup-email")
 let signupPassword = document.getElementById("signup-password")
-let signupPhone = document.getElementById("signup-phone#")
+let signupPhone = document.getElementById("signup-phone")
 let signupName = document.getElementById("signup-name")
 
 async function signup(e) {
