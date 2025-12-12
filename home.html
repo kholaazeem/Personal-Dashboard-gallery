@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home | Todo Dashboard</title>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,13 +28,18 @@
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
       margin: 30px auto;
       max-width: 900px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
     h1 {
-      font-size: 38px;
+      font-size: 28px;
       color: #3a3a3a;
       font-weight: 600;
-      text-align: center;
+      margin: 0;
     }
 
     #username {
@@ -41,11 +47,12 @@
       font-weight: 700;
     }
 
+    .header .btn {
+      margin-left: 10px;
+    }
+
     #logout-btn {
-      position: absolute;
-      top: 22px;
-      right: 25px;
-      font-size: 28px;
+      font-size: 20px;
       color: #d63384;
       transition: all 0.3s ease;
     }
@@ -55,7 +62,41 @@
       transform: scale(1.1);
     }
 
-    /* Todo Card Styling */
+    /* Card Container */
+    .card-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      margin: 20px auto;
+    }
+
+    .card-container h3 {
+      color: #198754;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    textarea,
+    input {
+      border-radius: 8px !important;
+    }
+
+    button {
+      border-radius: 8px !important;
+    }
+
+    /* Display Tasks */
+    #taskContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
     .todo-card {
       width: 270px;
       background: #ffffff;
@@ -76,45 +117,60 @@
       border-radius: 8px;
     }
 
-    /* Container */
-    .card-container {
-      background: #fff;
-      padding: 40px 30px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      margin: auto;
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header .btn {
+        margin: 5px 0 0 0;
+      }
     }
 
-    textarea, input {
-      border-radius: 8px !important;
-    }
+          /* cards css */
 
-    button {
-      border-radius: 8px !important;
-    }
+    .todo-card {
+  width: 260px; /* same width for all cards */
+  height: 220px; /* fixed height for uniformity */
+  display: flex;
+  flex-direction: column;
+}
 
-    .task-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.text-truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* show 2 lines max */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
   </style>
 </head>
+
 <body>
 
   <!-- Header -->
   <div class="header">
     <h1>Welcome, <span id="username"></span> 👋</h1>
-    <button class="btn btn-outline-success px-4 py-2 fw-semibold" id="logout-btn" title="Logout">
-  <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
-</button>
+    <div>
+      <a href="pic.html" class="btn btn-primary me-2"><i class="fa-solid fa-camera me-1"></i> User Pictures</a>
+      <button class="btn btn-outline-success fw-semibold" id="logout-btn" title="Logout">
+        <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
+      </button>
+    </div>
   </div>
 
   <!-- Add Task Section -->
   <div class="container py-4">
     <div class="card-container">
-      <h3 class="text-center text-success mb-4">📝 Create New Task</h3>
+      <h3>📝 Create New Task</h3>
 
       <!-- Title Field -->
       <div class="mb-3">
@@ -125,7 +181,7 @@
       <!-- Priority Selection -->
       <div class="mb-3">
         <label class="form-label fw-semibold">Priority</label>
-        <div class="d-flex gap-3">
+        <div class="d-flex gap-3 flex-wrap">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="taskPriority" id="priorityHigh" value="High">
             <label class="form-check-label text-danger fw-semibold" for="priorityHigh">High</label>
@@ -154,7 +210,7 @@
     </div>
 
     <!-- Display Area -->
-    <div id="taskContainer" class="d-flex flex-wrap gap-4 mt-5 justify-content-center">
+    <div id="taskContainer">
       <!-- Task cards will be dynamically added here -->
     </div>
   </div>
@@ -167,4 +223,5 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

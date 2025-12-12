@@ -141,18 +141,25 @@ function displayTodos(todos) {
           : "success";
 
     taskContainer.innerHTML += `
-      <div class="card shadow-sm border-0">
-        <div class="card-body">
-          <h5 class="card-title text-primary fw-bold">${todo.title}</h5>
-          <p class="card-text">${todo.description}</p>
-          <span class="badge bg-${color}">${todo.priority}</span>
+     <div class="card todo-card shadow-sm border-0">
+  <div class="card-body d-flex flex-column justify-content-between h-100">
+    <h5 class="card-title text-primary fw-bold text-truncate" title="${todo.title}">${todo.title}</h5>
+    <p class="card-text flex-grow-1 text-truncate-2" title="${todo.description}">${todo.description}</p>
+    <span class="badge bg-${color} mb-2">${todo.priority}</span>
+    <div class="d-flex justify-content-between mt-auto">
+      <button class="btn btn-outline-secondary btn-sm" onclick="editTodo(${todo.id},'${todo.title}','${todo.description}','${todo.priority}')">Edit</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="dltTodo(${todo.id},'${todo.title}','${todo.description}','${todo.priority}')">Delete</button>
+    </div>
+  </div>
+</div>
+`;
 
-          <br>
-    <button class="btn btn-outline-secondary" onclick="editTodo(${todo.id},'${todo.title}','${todo.description}','${todo.priority}')">Edit</button>
-    <button class="btn btn-outline-secondary" onclick="dltTodo(${todo.id},'${todo.title}','${todo.description}','${todo.priority}')">Delete</i></button>
-      </div>`;
+    
   });
 }
+
+
+
 
 window.editTodo = function (id, titl, desc,prio  ) {
 
