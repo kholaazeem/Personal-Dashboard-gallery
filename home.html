@@ -130,25 +130,80 @@
     }
 
           /* cards css */
-
-    .todo-card {
-  width: 260px; /* same width for all cards */
-  height: 220px; /* fixed height for uniformity */
-  display: flex;
-  flex-direction: column;
+/* Card Container Grid Styling */
+#taskContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Auto adjust columns */
+    gap: 25px;
+    padding: 10px;
 }
 
-.text-truncate {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+/* Main Card Style */
+.todo-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.05); /* Very light border */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    overflow: hidden; /* Content bahir nahi girega */
+    height: 100%; /* Grid mein height barabar rakhega */
+    display: flex;
+    flex-direction: column;
 }
 
-.text-truncate-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* show 2 lines max */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.todo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-color: #198754; /* Hover par border green hoga */
+}
+
+.card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Title Styling */
+.task-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 5px;
+    display: -webkit-box;
+   
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Description Styling */
+.task-desc {
+    color: #636e72;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1; /* Ye buttons ko neechay dhakelega */
+    
+    /* Text Truncate Logic */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Footer Section (Buttons) */
+.card-footer-custom {
+    margin-top: auto; /* Hamesha bottom par rahega */
+    padding-top: 15px;
+    border-top: 1px solid #f1f2f6;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.card-footer-custom button {
+    flex: 1; /* Dono buttons barabar size ke honge */
+    border-radius: 8px;
+    font-weight: 500;
 }
 
   </style>
@@ -225,3 +280,5 @@
 </body>
 
 </html>
+
+

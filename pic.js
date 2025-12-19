@@ -51,6 +51,7 @@ async function uplFile() {
         console.log("Error in inserting data into tables/db: ", error)
       }else{
         alert("Succefully upladed in tables/db")
+          fetchImg()
       }
 
 
@@ -87,7 +88,7 @@ async function fetchImg() {
      <img src="${card.image}" class="card-img-top" alt="">
      <div class="card-body">
          <button class="btn btn-success me-2" onclick = "startEdit(${card.id},'${card.image}')">Edit</button>
-         <button class="btn btn-danger"  onclick = "dltCard(${card.id},${card.image})">Delete</button>
+         <button class="btn btn-danger"  onclick = "dltCard(${card.id},'${card.image}')">Delete</button>
      </div>
 </div>
 `;
@@ -178,9 +179,10 @@ const { data:uplData, error: uplError } = await supabase.storage
         console.log("Error in inserting data into tables/db: ", error)
       }else{
         alert("Succefully edit pic")
+          fetchImg()
       }
 
-      fetchImg()
+    
         
 
     }
@@ -191,4 +193,41 @@ const { data:uplData, error: uplError } = await supabase.storage
 
 
 
+           // DELETE FUNCTIONALITY    
 
+           window.dltCard = async function (dltId , dltImgUrl){
+            alert("Are you sure you want to delete this image?")
+            console.log(dltId , dltImgUrl)
+
+            // delete image from bucket
+
+            const dltImgFileName = (dltImgUrl.split('/pictures/')[1])
+            console.log("Decoded file name to delete:", dltImgFileName)
+
+            const { data: dltData, error: dltError } = await supabase
+            .storage
+            .from('pictures')
+            .remove([dltImgFileName])
+
+            if(dltError){
+             console.log("Error in deleting file from bucket:", dltError);
+          }else{
+            console.log("File deleted successfully from bucket:", dltData)
+          }
+
+            // delete image data from table/db
+
+            const { data, error } = await supabase
+            .from('userpics')
+            .delete()
+            .eq('id', dltId)
+            .select('*')
+
+           if(error){
+            console.log("Error in deleting data from tables/db:", error)
+           }else{
+            alert("Succefully deleted image data from table/db")
+            fetchImg()                                                                                    
+
+           }
+          }
