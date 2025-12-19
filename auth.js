@@ -30,10 +30,22 @@ async function signup(e) {
             }
         )
         if (error) {
-            console.log(error)
+            Swal.fire({
+                title: "Error!",
+                text: error.message,
+                icon: "error"
+            })
+            return
         } else {
+            Swal.fire({
+                title: "Good job!",
+                text: "Signup successful!",
+                icon: "success"
+            })
+            .then(() => {   
             location.href = "login.html";
-        }
+        })
+    }
 
     } catch (err) {
         console.log(err)
@@ -69,12 +81,16 @@ signupPage && signupPage.addEventListener("submit", signup);
               })
 
                if (error) {
-                   console.log(error)
+                   Swal.fire({
+                       title: "Error!",
+                       text: error.message,
+                       icon: "error"
+                   })
                    return
                } else {
                 Swal.fire({
                   title: "Good job!",
-                  text: "You clicked the button!",
+                  text: "Login successful!",
                   icon: "success"
                })
                    .then(() => {

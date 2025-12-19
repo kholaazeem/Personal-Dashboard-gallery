@@ -50,7 +50,11 @@ async function uplFile() {
       if(error){
         console.log("Error in inserting data into tables/db: ", error)
       }else{
-        alert("Succefully upladed in tables/db")
+      Swal.fire({
+        title: "Good job!",
+        text: "File uploaded successfully!",
+        icon: "success"
+      })
           fetchImg()
       }
 
@@ -178,7 +182,11 @@ const { data:uplData, error: uplError } = await supabase.storage
       if(error){
         console.log("Error in inserting data into tables/db: ", error)
       }else{
-        alert("Succefully edit pic")
+      Swal.fire({
+        title: "Good job!",
+        text: "File updated successfully!",
+        icon: "success"
+      })
           fetchImg()
       }
 
@@ -226,7 +234,11 @@ const { data:uplData, error: uplError } = await supabase.storage
            if(error){
             console.log("Error in deleting data from tables/db:", error)
            }else{
-            alert("Succefully deleted image data from table/db")
+           Swal.fire({
+            title: "Good job!",
+            text: "File deleted successfully!",
+            icon: "success"
+          })
             fetchImg()                                                                                    
 
            }
