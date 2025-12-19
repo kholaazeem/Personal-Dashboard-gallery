@@ -10,9 +10,9 @@ A full-stack productivity application that combines a **Todo Manager** and a **S
 
 | Login Page | Dashboard / Todo List |
 |:---:|:---:|
-| ![Login UI](https://via.placeholder.com/400x200?text=Upload+Screenshot+1) | ![Dashboard UI](https://via.placeholder.com/400x200?text=Upload+Screenshot+2) |
+| ![Login UI](https://github.com/user-attachments/assets/b8929726-58d0-465e-a199-be3c0e3f7400) | ![Dashboard UI](https://github.com/user-attachments/assets/31a5d72b-bf5e-4dd0-8584-6f3cd34b43b7) | ![Image GAllery UI](https://github.com/user-attachments/assets/643aab02-81b1-4184-81eb-600bf0995d96)
 
-*(Note: These are placeholders. Please upload your actual screenshots to an 'assets' folder)*
+
 
 ---
 
@@ -87,3 +87,5 @@ Feel free to test the app using these demo credentials without signing up:
 ---
 
 <p align="center">Made with ❤️ and JavaScript</p>
+
+
